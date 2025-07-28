@@ -1,0 +1,7 @@
+package com.example.pricecreation.repositories;
+
+import com.example.pricecreation.models.Price;
+import org.springframework.data.mongodb.repository.MongoRepository;
+
+public interface PriceRepository extends MongoRepository<Price, String> {
+}

@@ -1,1 +1,36 @@
-Create a rest api application using Spring boot framework in java 21 which takes employee data and save the data in the database.
+The following is a Cucumber feature file describing the required functionality for a Java application.
+
+---
+Feature: Price Creation
+
+  @Reg @PriceCreationReg
+  Scenario Outline: Verify Price is getting created on posting event to the kafka topic
+    Given I delete all the existing records in the MongoDB 'price' collection for the Parent product id "<PPID>" and Season "<season>" combination
+    And I delete all the records from 'kafkaPriceEvent' collection for the Parent product id "<PPID>" and Season "<season>"
+    And I delete all the existing records from 'productPriceError' collection for the product id "<PPID>" and Season "<season>"
+    And I delete all the existing records from 'priceLocked' collection for the Parent product id "<PPID>" and Season "<season>"
+
+    When I post the 'cataLogueTypeId' event to the IBT Kafka Topic for "<PPID>" "<season>" "<Dept>"
+    Then Price should get created for the ppid "<PPID>" and season "<season>" for all the accounts in the MongoDB price collection
+    Then I fetch the offset values for the created price from 'kafkaPriceEvent' collection for the Parent product id "<PPID>" and Season "<season>"
+    And Price 'Create' event should be available in the Beam Kafka
+
+    Examples:
+      | PPID     | Season | Dept |
+      | 12345678 | AU25   | A55  |
+---
+
+Task:
+- Generate a complete Spring Boot project in Java 21 that implements the above feature.
+- Create all necessary controllers, services, models, repositories, and configuration files.
+- Implement step definitions for the feature scenarios.
+- Ensure the project structure follows standard Maven conventions.
+- Include a `pom.xml` configured for Java 21 and Cucumber integration.
+- Place the feature file in the appropriate `src/test/resources/features/` directory.
+- Write automated tests using Cucumber and JUnit.
+- Ensure the code is production-ready and follows best practices.
+
+Output:
+- Provide the full directory and file structure.
+- For each file, output the complete code.
+- Clearly indicate file paths and contents.
